@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compound Interest Calculator</title>
+    <style>
+        /* Reset default styles */
+        body, h1, label, input, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Compound Interest Calculator</h1>
+    <form id="interestForm">
+        <div class="form-group">
+            <label for="principal">Principal Amount (USD):</label>
+            <input type="number" id="principal" placeholder="Enter principal amount" required>
+        </div>
+        <div class="form-group">
+            <label for="rate">Annual Interest Rate (%):</label>
+            <input type="number" step="0.01" id="rate" placeholder="Enter annual interest rate" required>
+        </div>
+        <div class="form-group">
+            <label for="times">Times Compounded Per Year:</label>
+            <input type="number" id="times" placeholder="Enter number of times compounded per year" required>
+        </div>
+        <div class="form-group">
+            <label for="years">Number of Years:</label>
+            <input type="number" id="years" placeholder="Enter number of years" required>
+        </div>
+        <button type="submit">Calculate Compound Interest</button>
+    </form>
+    <div id="result" class="result">
+        <!-- Result will be displayed here -->
+    </div>
+</div>
+
+<script>
+    document.getElementById('interestForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form from submitting the traditional way
+
+        // Get user input
+        const principal = parseFloat(document.getElementById('principal').value);
+        const rate = parseFloat(document.getElementById('rate').value) / 100;
+        const times = parseFloat(document.getElementById('times').value);
+        const years = parseFloat(document.getElementById('years').value);
+
+        if (isNaN(principal) || isNaN(rate) || isNaN(times) || isNaN(years) || times === 0 || years === 0) {
+            alert('Please enter valid values for all fields.');
+            return;
+        }
+
+        // Calculate compound interest
+        const amount = principal * Math.pow(1 + (rate / times), times * years);
+        const interest = amount - principal;
+
+        // Display result
+        document.getElementById('result').innerHTML = `
+                <h2>Future Value: $${amount.toFixed(2)}</h2>
+                <p>Compound Interest: $${interest.toFixed(2)}</p>
+            `;
+    });
+</script>
+</body>
+</html>
